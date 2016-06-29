@@ -5,7 +5,7 @@ class CacheCollection {
     /**
      *
      * @param {String} collectionName (required)
-     * @param {Object }options (required) {
+     * @param {Object}options (required) {
      *  expire: default expiry time span in seconds
      *  indexes: [ array of index fields ] - first index name is treated as primary index
      * }
