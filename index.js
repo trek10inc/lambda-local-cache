@@ -37,7 +37,54 @@ class CacheCollection {
         this._container = global['CACHE_STORAGE'][collectionName];
     }
 
+    /**
+     * @param {Object} value (required) - item to save in cache
+     * @param {Number} expire (optional) - expiration time in minutes, default : 1 min
+     * */
+    set(value, expire) {
 
+        let primaryIndexValue = getKeyValue(value, this._container.primaryIndexName);
+        expire = (this._options.expire || expire || 1) * 60000 + Date.now();
+        this._container.primaryStorage.set(primaryIndexValue, { value, expire });
+
+        this._container.secondaryIndexNames.forEach(_ => {
+            let secondaryIndexValue = getKeyValue(value, _);
+            this._container.secondaryStorage.get(_).set(secondaryIndexValue, primaryIndexValue);
+        });
+
+    }
+
+    /**
+     * @param {String} key (required)
+     * @param {String} indexName (optional) - default is primary index
+     * */
+    get(key, indexName) {
+
+        if(!key) throw new Error('key is required!');
+
+        let record;
+
+        if(!indexName || indexName == this._container.primaryIndexName) {
+            record = this._container.primaryStorage.get(key);
+        }
+        else {
+            if(!this._container.secondaryStorage.get(indexName) || !this._container.secondaryStorage.get(indexName).has(key)) return null;
+
+            let primaryKey = this._container.secondaryStorage.get(indexName).get(key);
+            record = this._container.primaryStorage.get(primaryKey);
+        }
+
+        if (!record) return null;
+
+        if (!record.expire || record.expire > Date.now()) return record.value;
+        else return this.remove(key, indexName);
+    }
+
+}
+
+
+function getKeyValue(obj, key) {
+    return obj[key];
 }
 
 module.exports = CacheCollection;
