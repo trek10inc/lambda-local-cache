@@ -80,6 +80,34 @@ class CacheCollection {
         else return this.remove(key, indexName);
     }
 
+    /**
+     * @param {String} key (required)
+     * @param {String} indexName (required)
+     * */
+    remove(key, indexName) {
+
+        let primaryKey = !indexName ? key :
+            this._container.secondaryStorage.get(indexName).get(key);
+
+        let record = this._container.primaryStorage.get(primaryKey);
+        if (!record) return null;
+
+        this._container.secondaryIndexNames.forEach(_ => {
+            let secondaryIndexValue = getKeyValue(record.value, _);
+            this._container.secondaryStorage.get(_).delete(secondaryIndexValue);
+        });
+
+        this._container.primaryStorage.delete(primaryKey);
+        console.log('item removed...');
+        return null;
+
+    }
+
+    clear() {
+        this._container.primaryStorage.clear();
+        this._container.secondaryStorage.clear();
+    }
+
 }
 
 
