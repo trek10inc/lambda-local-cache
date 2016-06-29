@@ -1,0 +1,24 @@
+{
+  "name": "lambda-local-cache",
+  "version": "1.0.0",
+  "description": "local object caching in node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://code.trek10.com/internal-projects/lambda-local-cache"
+  },
+  "keywords": [
+    "lambda",
+    "cache",
+    "aws",
+    "node",
+    "node-cache",
+    "global-cache",
+    "node-global"
+  ],
+  "author": "trek10.com",
+  "license": "MIT"
+}
