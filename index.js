@@ -59,7 +59,7 @@ class CacheCollection {
 
     /**
      * @param {String} key (required)
-     * @param {String} indexName (optional) - default is primary index
+     * @param {String=} indexName (optional) - default is primary index
      * */
     get(key, indexName) {
         if(!key) throw new Error('key is required!');
