@@ -1,6 +1,6 @@
 {
   "name": "lambda-local-cache",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "local object caching in node",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://code.trek10.com/internal-projects/lambda-local-cache"
+    "url": "https://github.com/trek10inc/lambda-local-cache"
   },
   "keywords": [
     "lambda",
