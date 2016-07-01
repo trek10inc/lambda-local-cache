@@ -42,6 +42,11 @@ class CacheCollection {
      * @param {Number} expire (optional) - expiration time in minutes, default : 1 min
      * */
     set(value, expire) {
+        if (Array.isArray(value)) {
+            value.forEach(_ => this.set(_, expire));
+            return;
+        }
+
         let primaryIndexValue = getKeyValue(value, this._container.primaryIndexName);
         expire = (this._options.expire || expire || 1) * 60000 + Date.now();
         this._container.primaryStorage.set(primaryIndexValue, { value, expire });
@@ -108,8 +113,14 @@ class CacheCollection {
         });
     }
 
-}
 
+    /**
+     * get cached items count
+     * */
+    get count() {
+        return this._container.primaryStorage.size;
+    }
+}
 
 function getKeyValue(obj, key) {
     return obj[key];

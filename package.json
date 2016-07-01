@@ -1,6 +1,6 @@
 {
   "name": "lambda-local-cache",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "local object caching in node",
   "main": "index.js",
   "scripts": {
